@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
-import { CourseEnrollment } from './StudentEnrollCourse.entity';
-import { CourseEdition } from './TeacherEditCourse.entity';
-import { Admin } from './Admin.entity';
+import CourseEnrollment from './StudentEnrollCourse.entity';
+import CourseEdition from './TeacherEditCourse.entity';
+import Admin from './Admin.entity';
 
 @Entity({ name: 'course', schema: 'ailms' })
-export class Course {
+export default class Course {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

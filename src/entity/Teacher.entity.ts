@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { CourseEdition } from './TeacherEditCourse.entity';
+import CourseEdition from './TeacherEditCourse.entity';
 
 @Entity({ name: 'teacher', schema: 'ailms' })
-export class Teacher {
+export default class Teacher {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Student } from './Student.entity';
-import { Course } from './Course.entity';
+import Student from './Student.entity';
+import Course from './Course.entity';
 
 @Entity({ name: 'course_enrollment', schema: 'ailms' })
-export class CourseEnrollment {
+export default class CourseEnrollment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
