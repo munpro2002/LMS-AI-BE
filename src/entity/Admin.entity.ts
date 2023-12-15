@@ -12,7 +12,7 @@ export default class Admin {
   @Column()
   email: string;
 
-  @Column({ default: true })
+  @Column()
   status: boolean;
 
   @OneToMany(() => Course, (Course) => Course.createdBy)

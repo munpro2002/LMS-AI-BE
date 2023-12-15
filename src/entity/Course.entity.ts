@@ -2,7 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'ty
 import CourseEnrollment from './StudentEnrollCourse.entity';
 import CourseEdition from './TeacherEditCourse.entity';
 import Admin from './Admin.entity';
-
+import Section from './Section.entity';
+import Assignment from './Assignment.entity';
 @Entity({ name: 'course', schema: 'ailms' })
 export default class Course {
   @PrimaryGeneratedColumn('uuid')
@@ -34,4 +35,10 @@ export default class Course {
 
   @ManyToOne(() => Admin, (Admin) => Admin.course)
   createdBy: Admin;
+
+  @OneToMany(() => Section, (Section) => Section.course)
+  section: Section[];
+
+  @OneToMany(() => Assignment, (Assignment) => Assignment.course)
+  assignment: Assignment[];
 }
