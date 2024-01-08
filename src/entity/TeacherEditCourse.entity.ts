@@ -1,12 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, ManyToOne } from 'typeorm';
 import Course from './Course.entity';
 import Teacher from './Teacher.entity';
+import BaseEntity from './base/base.entity';
 
 @Entity({ name: 'course_edition', schema: 'ailms' })
-export default class CourseEdition {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export default class CourseEdition extends BaseEntity{
   @ManyToOne(() => Course, (Course) => Course.courseEdition)
   course: Course;
 

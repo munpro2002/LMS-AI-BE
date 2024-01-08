@@ -1,22 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, ChildEntity, OneToMany } from 'typeorm';
 import CourseEdition from './TeacherEditCourse.entity';
 import Comment from './Comment.entity';
+import User from './User.entity';
 
-@Entity({ name: 'teacher', schema: 'ailms' })
-export default class Teacher {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+@ChildEntity()
+export default class Teacher extends User {
   @Column()
-  name: string;
-
-  @Column()
-  email: string;
-
-  @Column({ default: true })
-  status: boolean;
-
-  @Column({ nullable: true })
   specialist: string;
 
   @OneToMany(() => CourseEdition, (CourseEdition) => CourseEdition.teacher)

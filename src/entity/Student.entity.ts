@@ -1,22 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { ChildEntity, OneToMany } from 'typeorm';
 import CourseEnrollment from './StudentEnrollCourse.entity';
 import Payment from './Payment.entity';
 import Comment from './Comment.entity';
 import AssigmentAttempt from './StudentTakeAssigment.entity';
-@Entity({ name: 'student', schema: 'ailms' })
-export default class Student {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+import User from './User.entity';
 
-  @Column()
-  name: string;
-
-  @Column()
-  email: string;
-
-  @Column({ default: true })
-  status: boolean;
-
+@ChildEntity()
+export default class Student extends User{
   @OneToMany(() => CourseEnrollment, (CourseEnrollment) => CourseEnrollment.student)
   courseEnrollment: CourseEnrollment[];
 

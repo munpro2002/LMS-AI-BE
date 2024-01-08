@@ -1,12 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import Student from './Student.entity';
 import Teacher from './Teacher.entity';
+import BaseEntity from './base/base.entity';
 
 @Entity({ name: 'comment', schema: 'ailms' })
-export default class Comment {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export default class Comment extends BaseEntity{
   @Column()
   content: string;
 

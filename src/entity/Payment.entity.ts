@@ -1,10 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, Timestamp } from 'typeorm';
 import Student from './Student.entity';
-@Entity({ name: 'payment', schema: 'ailms' })
-export default class Payment {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+import BaseEntity from './base/base.entity';
 
+@Entity({ name: 'payment', schema: 'ailms' })
+export default class Payment extends BaseEntity{
   @Column()
   date_pay: Date;
 

@@ -1,11 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import Section from './Section.entity';
+import BaseEntity from './base/base.entity';
 
 @Entity({ name: 'quiz', schema: 'ailms' })
-export default class Quiz {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export default class Quiz extends BaseEntity{
   @Column()
   question: string;
 

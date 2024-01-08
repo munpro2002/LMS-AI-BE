@@ -1,20 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { ChildEntity, OneToMany } from 'typeorm';
+import User from './User.entity';
 import Course from './Course.entity';
 
-@Entity({ name: 'admin', schema: 'ailms' })
-export default class Admin {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column()
-  name: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  status: boolean;
-
+@ChildEntity()
+export default class Admin extends User {
   @OneToMany(() => Course, (Course) => Course.createdBy)
   course: Course[];
 }

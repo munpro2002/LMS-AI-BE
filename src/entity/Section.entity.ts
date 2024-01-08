@@ -2,11 +2,10 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'ty
 import Course from './Course.entity';
 import Lesson from './Lesson.entity';
 import Quiz from './Quiz.entity';
-@Entity({ name: 'section', schema: 'ailms' })
-export default class Section {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+import BaseEntity from './base/base.entity';
 
+@Entity({ name: 'section', schema: 'ailms' })
+export default class Section extends BaseEntity{
   @Column()
   name: string;
 

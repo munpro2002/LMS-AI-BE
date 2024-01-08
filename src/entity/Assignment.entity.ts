@@ -1,11 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import Course from './Course.entity';
 import AssigmentAttempt from './StudentTakeAssigment.entity';
-@Entity({ name: 'assignment', schema: 'ailms' })
-export default class Assignment {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+import BaseEntity from './base/base.entity';
 
+@Entity({ name: 'assignment', schema: 'ailms' })
+export default class Assignment extends BaseEntity{
   @Column()
   duration: number;
 

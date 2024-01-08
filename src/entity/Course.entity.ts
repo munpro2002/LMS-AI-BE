@@ -4,22 +4,27 @@ import CourseEdition from './TeacherEditCourse.entity';
 import Admin from './Admin.entity';
 import Section from './Section.entity';
 import Assignment from './Assignment.entity';
+import BaseEntity from './base/base.entity';
+
 @Entity({ name: 'course', schema: 'ailms' })
-export default class Course {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export default class Course extends BaseEntity{
   @Column()
-  name: string;
-
+  title: string;
+ 
+  @Column()
+  subTitle: string;
+ 
   @Column()
   category: string;
 
   @Column()
-  description: string;
+  language: string;
 
   @Column()
-  language: string;
+  level: string;
+
+  @Column()
+  duration: number;
 
   @Column({ nullable: true})
   rating: number;
