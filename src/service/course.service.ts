@@ -33,8 +33,8 @@ export class CourseService {
         return newCourse
     }
 
-    async getAllCourses(status: boolean = true) {
-        return await this.courseRepository.findAll(status)
+    async getAllAvailableCourses() {
+        return await this.courseRepository.findAll(true)
     }
 }
   

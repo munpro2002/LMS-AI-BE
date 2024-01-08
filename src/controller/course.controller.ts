@@ -11,7 +11,7 @@ export class CourseController {
     }
 
     @Get('course_get_all')
-    getAllCourseController(@Body() status: boolean = true) {
-        return this.courseService.getAllCourses(status);
+    getAllCourseController() {
+        return this.courseService.getAllAvailableCourses();
     }
 }
