@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
 import { TeacherRepositoryInterface } from "src/interface/teacher.interface";
 import { StudentRepositoryInterface } from "src/interface/student.interface";
 import { AdminRepositoryInterface } from "src/interface/admin.interface";
@@ -19,7 +19,7 @@ export class UserService {
 
     async verifyUserLoginCredentials(userLoginCredentialsDto: UserLoginCredentialsDto) {
       const { email, password } = userLoginCredentialsDto;
-      const user = await this.userRepository.findOneBy({email});
+      const user = await this.userRepository.getUserByEmail(email);
       
       if (!user) {
         throw new HttpException(HTTPMESSAGE.NO_USER_FOUND, HttpStatus.BAD_REQUEST);
@@ -35,8 +35,6 @@ export class UserService {
     }
 
     async registerNewUser(userInformationDto: UserInformationDto) {
-      await this.checkEmailExist(userInformationDto.email);
-
       const password = this.encodePassword(userInformationDto.password);
 
       const newStudentUser = this.studentRepository.create(
@@ -47,8 +45,6 @@ export class UserService {
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
-      await this.checkEmailExist(userInformationDto.email);
-
       const password = this.encodePassword(userInformationDto.password);
 
       const newTeacherUser = this.teacherRepository.create(
@@ -59,7 +55,7 @@ export class UserService {
     }
 
     async checkEmailExist(email: string) {
-      const user = await this.userRepository.findOneBy({email: email});
+      const user = await this.userRepository.getUserByEmail(email);
 
       if (user) {
         throw new HttpException(HTTPMESSAGE.EMAIL_ALREADY_REGISTERED, HttpStatus.BAD_REQUEST)
