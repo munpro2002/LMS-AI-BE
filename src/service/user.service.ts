@@ -37,21 +37,13 @@ export class UserService {
     async registerNewUser(userInformationDto: UserInformationDto) {
       const password = this.encodePassword(userInformationDto.password);
 
-      const newStudentUser = this.studentRepository.create(
-        {...userInformationDto, password}
-      );
-
-      return this.studentRepository.save(newStudentUser);
+      return this.studentRepository.createNewStudent({...userInformationDto, password});
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
       const password = this.encodePassword(userInformationDto.password);
 
-      const newTeacherUser = this.teacherRepository.create(
-        {...userInformationDto, password}
-      );
-
-      return this.teacherRepository.save(newTeacherUser);
+      return this.teacherRepository.createNewTeacher({...userInformationDto, password});
     }
 
     async checkEmailExist(email: string) {
