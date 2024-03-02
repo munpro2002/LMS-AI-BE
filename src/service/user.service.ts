@@ -5,12 +5,15 @@ import { AdminRepositoryInterface } from "src/interface/admin.interface";
 import { UserRepositoryInterface } from "src/interface/user.interface";
 import { UserLoginCredentialsDto } from "src/dto/UserLoginCredentialsDto";
 import { UserInformationDto } from "src/dto/UserInfomationDtos";
+import { JwtService } from "@nestjs/jwt";
 import { HTTPMESSAGE } from "src/enums/HttpExceptionMessage.enum";
+import User from "src/entity/User.entity";
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
     constructor(
+      private jwtService: JwtService,
       @Inject('UserRepositoryInterface') private userRepository: UserRepositoryInterface,
       @Inject('TeacherRepositoryInterface') private teacherRepository: TeacherRepositoryInterface,
       @Inject('AdminRepositoryInterface') private adminRepository: AdminRepositoryInterface,
@@ -31,19 +34,27 @@ export class UserService {
         throw new HttpException(HTTPMESSAGE.INVALID_CREDENTIALS, HttpStatus.BAD_REQUEST);
       }
 
-      return user;
+      return this.generateJwt(user);
     }
 
     async registerNewUser(userInformationDto: UserInformationDto) {
+      await this.checkEmailExist(userInformationDto.email);
+      
       const password = this.encodePassword(userInformationDto.password);
 
-      return this.studentRepository.createNewStudent({...userInformationDto, password});
+      const user = await this.studentRepository.createNewStudent({...userInformationDto, password});
+
+      return this.generateJwt(user)
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
+      await this.checkEmailExist(userInformationDto.email);
+
       const password = this.encodePassword(userInformationDto.password);
 
-      return this.teacherRepository.createNewTeacher({...userInformationDto, password});
+      const user = await this.teacherRepository.createNewTeacher({...userInformationDto, password});
+    
+      return this.generateJwt(user);
     }
 
     async checkEmailExist(email: string) {
@@ -58,6 +69,14 @@ export class UserService {
       const SALT = 10;
       const salt = bcrypt.genSaltSync(SALT);
       return bcrypt.hashSync(originPassword, salt);
+    }
+ 
+    async generateJwt(user: User) {
+      const payload = {sub: user.id, userName: user.name};
+      
+      return {
+        access_token: await this.jwtService.signAsync(payload)
+      }
     }
 }
   

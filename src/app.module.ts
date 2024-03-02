@@ -7,6 +7,8 @@ import { CourseModule } from './module/course.module';
 import { PaymentModule } from './module/payment.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmConfigAsync } from './config/typeorm.config';
+import { AuthGuard } from './guard/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,6 +18,10 @@ import { TypeOrmConfigAsync } from './config/typeorm.config';
     TypeOrmModule.forRootAsync(TypeOrmConfigAsync),
     UserModule, CourseModule, PaymentModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+  {
+    provide: APP_GUARD,
+    useClass: AuthGuard
+  }],
 })
 export class AppModule {}
