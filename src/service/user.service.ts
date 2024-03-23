@@ -9,6 +9,7 @@ import { JwtService } from "@nestjs/jwt";
 import { HTTPMESSAGE } from "src/enums/HttpExceptionMessage.enum";
 import User from "src/entity/User.entity";
 import * as bcrypt from 'bcrypt';
+import { USERROLE } from "src/enums/UserRole.enum";
 
 @Injectable()
 export class UserService {
@@ -48,11 +49,25 @@ export class UserService {
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
-      await this.checkEmailExist(userInformationDto.email);
+      const {roleType, ...userInformation} = userInformationDto;
 
-      const password = this.encodePassword(userInformationDto.password);
+      if (!roleType) {
+        throw new HttpException(HTTPMESSAGE.MISSING_FIELDS, HttpStatus.BAD_REQUEST)
+      }
 
-      const user = await this.teacherRepository.createNewTeacher({...userInformationDto, password});
+      await this.checkEmailExist(userInformation.email);
+
+      const password = this.encodePassword(userInformation.password);
+
+      let user = null;
+
+      if (roleType === USERROLE.ADMIN) {
+        user = await this.adminRepository.createNewAdmin({...userInformation, password});
+      }
+
+      if (roleType === USERROLE.TEACHER) {
+        user = await this.teacherRepository.createNewTeacher({...userInformation, password});
+      }
     
       return this.generateJwt(user);
     }
@@ -77,6 +92,10 @@ export class UserService {
       return {
         access_token: await this.jwtService.signAsync(payload)
       }
+    }
+
+    async getAvailableTeachers() {
+      return this.teacherRepository.getAvailableTeachers();
     }
 }
   

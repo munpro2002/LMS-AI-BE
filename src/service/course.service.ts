@@ -16,25 +16,26 @@ export class CourseService {
         @Inject('AdminRepositoryInterface') private adminRepository: AdminRepositoryInterface
     ) {}
 
-    async createNewCourse(courseInformationDtos: CourseInformationDtos) {
-        const {teacherInChargeIds, adminId, ...courseInformation} = courseInformationDtos;
-        const admin = await this.adminRepository.findById(adminId)
-        const newCourse = this.courseRepository.create({...courseInformation, createdBy: admin})
+    async createNewCourse(courseInformationDtos: CourseInformationDtos, request: Request) {
+        const {teacherInChargeIds, ...courseInformation} = courseInformationDtos;
         
-        await this.courseRepository.save(newCourse)
+        const admin = await this.adminRepository.findById(request['user'].sub);
+        const newCourse = this.courseRepository.create({...courseInformation, createdBy: admin});
+        
+        await this.courseRepository.save(newCourse);
 
         teacherInChargeIds.forEach(async id => {
-            const teacher = await this.teacherRepository.findById(id)
-            const courseEdition = this.courseEditionRepository.create({teacher: teacher, course: newCourse})
+            const teacher = await this.teacherRepository.findById(id);
+            const courseEdition = this.courseEditionRepository.create({teacher: teacher, course: newCourse});
 
             await this.courseEditionRepository.save(courseEdition)
         })
 
-        return newCourse
+        return newCourse;
     }
 
     async getAllAvailableCourses() {
-        return await this.courseRepository.findAll(true)
+        return await this.courseRepository.findAll(true);
     }
 }
   

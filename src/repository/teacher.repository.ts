@@ -17,4 +17,8 @@ export class TeacherRepository extends BaseRepositoryAbstract<Teacher> {
     
         return await this.save(newTeacher);
     }
+
+    async getAllAvailableTeacher(): Promise<Teacher[]> {
+        return await this.findAll();
+    }
 }

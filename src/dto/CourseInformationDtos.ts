@@ -4,11 +4,11 @@ import { COURSELEVEL } from "src/enums/CourseLevel.enum"
 
 export class CourseInformationDtos {
     title: string
-    subTitle: string
+    description: string
     language: COURSELANGUAGE
     category: COURSECATEGORY
     level: COURSELEVEL
-    duration: number // in weeks
-    adminId: number
+    thumbnailPath: string;
+    trailerPath: string;
     teacherInChargeIds: number[]
 }

@@ -12,7 +12,7 @@ export default class Course extends BaseEntity{
   title: string;
  
   @Column()
-  subTitle: string;
+  description: string;
  
   @Column()
   category: string;
@@ -24,7 +24,10 @@ export default class Course extends BaseEntity{
   level: string;
 
   @Column()
-  duration: number;
+  thumbnailPath: string;
+
+  @Column()
+  trailerPath: string;
 
   @Column({ nullable: true})
   rating: number;

@@ -5,4 +5,6 @@ import { BaseRepositoryInterface } from 'src/repository/base/base.interface.repo
 export interface TeacherRepositoryInterface
    extends BaseRepositoryInterface<Teacher> {
       createNewTeacher(userInformationDto: UserInformationDto): Promise<Teacher>;
+
+      getAvailableTeachers(): Promise<Teacher[]>;
    }
