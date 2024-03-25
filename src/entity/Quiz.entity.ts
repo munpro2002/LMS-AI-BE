@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 import Section from './Section.entity';
 import BaseEntity from './base/base.entity';
 
@@ -22,6 +22,7 @@ export default class Quiz extends BaseEntity{
   @Column()
   correct_choice: string;
 
-  @ManyToOne(() => Section, (Section) => Section.quiz)
-  section: Section[];
+  @OneToOne(() => Section)
+  @JoinColumn()
+  section: Section
 }

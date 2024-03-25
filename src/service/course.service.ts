@@ -6,6 +6,8 @@ import { CourseEditionRepositoryInterface } from "src/interface/courseEdition.in
 import { TeacherRepositoryInterface } from "src/interface/teacher.interface";
 import { AdminRepositoryInterface } from "src/interface/admin.interface";
 import { CourseInformationDtos } from "src/dto/CourseInformationDtos";
+import { CourseEnrollmentRepositoryInterface } from "src/interface/courseEnrollment.interface";
+import { StudentRepositoryInterface } from "src/interface/student.interface";
 
 @Injectable()
 export class CourseService {
@@ -13,7 +15,9 @@ export class CourseService {
         @Inject('CourseRepositoryInterface') private courseRepository: CourseRepositoryInterface,
         @Inject('CourseEditionRepositoryInterface') private courseEditionRepository: CourseEditionRepositoryInterface,  
         @Inject('TeacherRepositoryInterface') private teacherRepository: TeacherRepositoryInterface,
-        @Inject('AdminRepositoryInterface') private adminRepository: AdminRepositoryInterface
+        @Inject('StudentRepositoryInterface') private studentRepository: StudentRepositoryInterface,
+        @Inject('AdminRepositoryInterface') private adminRepository: AdminRepositoryInterface,
+        @Inject('CourseEnrollmentRepositoryInterface') private courseEnrollmentRepository: CourseEnrollmentRepositoryInterface
     ) {}
 
     async createNewCourse(courseInformationDtos: CourseInformationDtos, request: Request) {
@@ -36,6 +40,14 @@ export class CourseService {
 
     async getAllAvailableCourses() {
         return await this.courseRepository.findAll(true);
+    }
+
+    async getStudentCourses(request: Request) {
+        const studentId = request['user'].sub;
+
+        const student = await this.studentRepository.findById(studentId);
+
+        return this.courseEnrollmentRepository.getStudentCourses(student);
     }
 }
   
