@@ -6,5 +6,5 @@ export interface TeacherRepositoryInterface
    extends BaseRepositoryInterface<Teacher> {
       createNewTeacher(userInformationDto: UserInformationDto): Promise<Teacher>;
 
-      getAvailableTeachers(): Promise<Teacher[]>;
+      getAllAvailableTeachers(): Promise<Teacher[]>;
    }

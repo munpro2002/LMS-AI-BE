@@ -21,4 +21,9 @@ export class CourseController {
     getUserCoursesController(@Req() request: Request) {
         return this.courseService.getStudentCourses(request);
     }
+
+    @Get('student_enroll_course')
+    studentEnrollCourseController(@Req() request: Request, @Body() courseId) {
+        return this.courseService.studentEnrollCourse(request, courseId);
+    }
 }

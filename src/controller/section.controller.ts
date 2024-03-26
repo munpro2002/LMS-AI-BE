@@ -10,8 +10,6 @@ export class SectionController {
     @Public()
     @Post('create_section')
     verifyUserLoginController(@Body() sectionInformationDtos: SectionInformationDtos) {
-        Logger.log(sectionInformationDtos);
-        
         return this.sectionService.createSection(sectionInformationDtos);
     }
 }

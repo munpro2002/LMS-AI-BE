@@ -94,8 +94,8 @@ export class UserService {
       }
     }
 
-    async getAvailableTeachers() {
-      return this.teacherRepository.getAvailableTeachers();
+    async getAllAvailableTeachers() {
+      return this.teacherRepository.getAllAvailableTeachers();
     }
 }
   

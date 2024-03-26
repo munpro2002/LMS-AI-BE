@@ -28,7 +28,7 @@ export class UserController {
     }
 
     @Get('get_available_teachers')
-    getAvailableTeachersController() {
-        return this.userService.getAvailableTeachers();
+    getAllAvailableTeachersController() {
+        return this.userService.getAllAvailableTeachers();
     }
 }
