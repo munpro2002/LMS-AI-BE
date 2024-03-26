@@ -23,7 +23,7 @@ export class CourseController {
     }
 
     @Get('student_enroll_course')
-    studentEnrollCourseController(@Req() request: Request, @Body() courseId) {
+    studentEnrollCourseController(@Req() request: Request, @Body() courseId: number) {
         return this.courseService.studentEnrollCourse(request, courseId);
     }
 }

@@ -14,7 +14,7 @@ export class CourseEditionRepository extends BaseRepositoryAbstract<CourseEditio
         super(courseEditionRepository);
     }
 
-    async teacherAssignedCourse(teacherId: number, course: Course) {
+    async teacherAssignedCourse(teacherId: number, course: Course): Promise<CourseEdition> {
         const teacher = await this.teacherRepository.findById(teacherId);
 
         const courseEdition = this.create({teacher, course});

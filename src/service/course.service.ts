@@ -6,6 +6,7 @@ import { CourseEditionRepositoryInterface } from "src/interface/courseEdition.in
 import { AdminRepositoryInterface } from "src/interface/admin.interface";
 import { CourseInformationDtos } from "src/dto/CourseInformationDtos";
 import { CourseEnrollmentRepositoryInterface } from "src/interface/courseEnrollment.interface";
+import { ENTITY_STATUS } from "src/constants/EntityStatus.constant";
 
 @Injectable()
 export class CourseService {
@@ -32,7 +33,7 @@ export class CourseService {
     }
 
     async getAllAvailableCourses() {
-        return await this.courseRepository.findAll(true);
+        return await this.courseRepository.findAll(ENTITY_STATUS.AVAILABLE);
     }
 
     async getStudentCourses(request: Request) {

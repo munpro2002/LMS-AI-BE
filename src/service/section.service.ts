@@ -34,5 +34,9 @@ export class SectionService {
 
         return createdSection
     }
+
+    async getCourseSections(courseId: number) {
+        return await this.sectionRepository.getCourseSections(courseId)
+    }
 }
   

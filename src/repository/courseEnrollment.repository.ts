@@ -21,7 +21,7 @@ export class CourseEnrollmentRepository extends BaseRepositoryAbstract<CourseEnr
         return await this.findBy({student})
     }
 
-    async studentEnrollCourse(studentId: number, courseId: number) {
+    async studentEnrollCourse(studentId: number, courseId: number): Promise<CourseEnrollment> {
         const student = await this.studentRepository.findById(studentId)
         const course = await this.courseRepository.findById(courseId)
 

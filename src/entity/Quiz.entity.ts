@@ -22,7 +22,6 @@ export default class Quiz extends BaseEntity{
   @Column()
   correct_choice: string;
 
-  @OneToOne(() => Section)
-  @JoinColumn()
+  @OneToOne(() => Section, (section) => section.quiz)
   section: Section
 }

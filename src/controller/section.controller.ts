@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { Public } from 'src/decorator/public.decorator';
 import { SectionInformationDtos } from 'src/dto/SectionInformationDtos';
 import { SectionService } from 'src/service/section.service';
@@ -11,5 +11,11 @@ export class SectionController {
     @Post('create_section')
     verifyUserLoginController(@Body() sectionInformationDtos: SectionInformationDtos) {
         return this.sectionService.createSection(sectionInformationDtos);
+    }
+
+    @Public()
+    @Get('get_course_sections')
+    getCourseSectionsController(courseId: number) {
+        return this.sectionService.getCourseSections(courseId);
     }
 }
