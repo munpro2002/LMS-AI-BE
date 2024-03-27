@@ -11,7 +11,7 @@ export default class Course extends BaseEntity{
   @Column()
   title: string;
  
-  @Column()
+  @Column({type: 'varchar', length: 1000})
   description: string;
  
   @Column()
