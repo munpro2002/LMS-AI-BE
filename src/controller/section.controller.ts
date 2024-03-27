@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Logger } from '@nestjs/common';
 import { Public } from 'src/decorator/public.decorator';
 import { SectionInformationDtos } from 'src/dto/SectionInformationDtos';
 import { SectionService } from 'src/service/section.service';
@@ -14,8 +14,8 @@ export class SectionController {
     }
 
     @Public()
-    @Get('get_course_sections')
-    getCourseSectionsController(courseId: number) {
+    @Get('get_course_sections/?')
+    getCourseSectionsController(@Query('courseId') courseId: number) {
         return this.sectionService.getCourseSections(courseId);
     }
 }

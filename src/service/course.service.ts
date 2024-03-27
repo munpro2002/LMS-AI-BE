@@ -1,5 +1,5 @@
 
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { Inject } from "@nestjs/common";
 import { CourseRepositoryInterface } from "src/interface/course.interface";
 import { CourseEditionRepositoryInterface } from "src/interface/courseEdition.interface";
@@ -7,6 +7,7 @@ import { AdminRepositoryInterface } from "src/interface/admin.interface";
 import { CourseInformationDtos } from "src/dto/CourseInformationDtos";
 import { CourseEnrollmentRepositoryInterface } from "src/interface/courseEnrollment.interface";
 import { ENTITY_STATUS } from "src/constants/EntityStatus.constant";
+import { CourseEnrollmentDtos } from "src/dto/CouseEnrollmentDtos";
 
 @Injectable()
 export class CourseService {
@@ -42,10 +43,10 @@ export class CourseService {
         return this.courseEnrollmentRepository.getStudentCourses(studentId);
     }
 
-    async studentEnrollCourse(request: Request, courseId: number) {
+    async studentEnrollCourse(request: Request, courseEnrollmentDtos: CourseEnrollmentDtos) {
         const studentId = request['user'].sub
 
-        return this.courseEnrollmentRepository.studentEnrollCourse(studentId, courseId)
+        return this.courseEnrollmentRepository.studentEnrollCourse(studentId, courseEnrollmentDtos)
     }
 
 }

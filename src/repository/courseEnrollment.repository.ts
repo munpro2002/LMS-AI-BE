@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Inject } from "@nestjs/common";
 import { StudentRepositoryInterface } from "src/interface/student.interface";
 import { CourseRepositoryInterface } from "src/interface/course.interface";
+import { CourseEnrollmentDtos } from "src/dto/CouseEnrollmentDtos";
 
 export class CourseEnrollmentRepository extends BaseRepositoryAbstract<CourseEnrollment> {
     constructor(
@@ -21,11 +22,13 @@ export class CourseEnrollmentRepository extends BaseRepositoryAbstract<CourseEnr
         return await this.findBy({student})
     }
 
-    async studentEnrollCourse(studentId: number, courseId: number): Promise<CourseEnrollment> {
-        const student = await this.studentRepository.findById(studentId)
-        const course = await this.courseRepository.findById(courseId)
+    async studentEnrollCourse(studentId: number, courseEnrollmentDtos: CourseEnrollmentDtos): Promise<CourseEnrollment> {
+        const {courseId, ...courseEnrollmentInfo} = courseEnrollmentDtos;
+        
+        const student = await this.studentRepository.findById(studentId);
+        const course = await this.courseRepository.findById(courseId);
 
-        const courseEnrollment = this.create({student, course})
+        const courseEnrollment = this.create({student, course, ...courseEnrollmentInfo})
 
         return await this.save(courseEnrollment);
     }

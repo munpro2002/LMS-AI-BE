@@ -2,6 +2,7 @@ import { Body, Post, Get, Controller, Req } from '@nestjs/common';
 import { CourseService } from 'src/service/course.service';
 import { CourseInformationDtos } from 'src/dto/CourseInformationDtos';
 import { Public } from 'src/decorator/public.decorator';
+import { CourseEnrollmentDtos } from 'src/dto/CouseEnrollmentDtos';
 @Controller('api/v1/course/')
 export class CourseController {
     constructor(private courseService: CourseService) {}
@@ -22,8 +23,8 @@ export class CourseController {
         return this.courseService.getStudentCourses(request);
     }
 
-    @Get('student_enroll_course')
-    studentEnrollCourseController(@Req() request: Request, @Body() courseId: number) {
-        return this.courseService.studentEnrollCourse(request, courseId);
+    @Post('student_enroll_course')
+    studentEnrollCourseController(@Req() request: Request, @Body() courseEnrollmentDtos: CourseEnrollmentDtos) {
+        return this.courseService.studentEnrollCourse(request, courseEnrollmentDtos);
     }
 }
