@@ -17,7 +17,9 @@ export class SectionRepository extends BaseRepositoryAbstract<Section> {
         const course =  await this.courseRepository.findById(courseId);
 
         return await this.findBy({
-            course: course,
+            where: {
+                course: course,
+            },
             relations: ["lesson", "quiz"]
         })
     }
