@@ -35,7 +35,7 @@ export class UserService {
         throw new HttpException(HTTPMESSAGE.INVALID_CREDENTIALS, HttpStatus.BAD_REQUEST);
       }
 
-      return this.generateJwt(user);
+      return this.returnUserWithJWT(user);
     }
 
     async registerNewUser(userInformationDto: UserInformationDto) {
@@ -45,7 +45,7 @@ export class UserService {
 
       const user = await this.studentRepository.createNewStudent({...userInformationDto, password});
 
-      return this.generateJwt(user)
+      return this.returnUserWithJWT(user);
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
@@ -69,7 +69,7 @@ export class UserService {
         user = await this.teacherRepository.createNewTeacher({...userInformation, password});
       }
     
-      return this.generateJwt(user);
+      return this.returnUserWithJWT(user);
     }
 
     async checkEmailExist(email: string) {
@@ -86,11 +86,13 @@ export class UserService {
       return bcrypt.hashSync(originPassword, salt);
     }
  
-    async generateJwt(user: User) {
+    async returnUserWithJWT(user: User) {
       const payload = {sub: user.id, userName: user.name};
+      const {password, ...userReturnInfo} = user
       
       return {
-        access_token: await this.jwtService.signAsync(payload)
+        access_token: await this.jwtService.signAsync(payload),
+        user: userReturnInfo
       }
     }
 
