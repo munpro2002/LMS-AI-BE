@@ -7,7 +7,8 @@ export interface BaseRepositoryInterface<T> {
     findById(id: number): Promise<T>;
 
     findBy(
-        filter: object
+        conditions: object,
+        entities: Array<string>
     ): Promise<T[]>;
 
     findOneBy(

@@ -16,11 +16,6 @@ export class SectionRepository extends BaseRepositoryAbstract<Section> {
     async getCourseSections(courseId: number): Promise<Section[]> {
         const course =  await this.courseRepository.findById(courseId);
 
-        return await this.findBy({
-            where: {
-                course: course,
-            },
-            relations: ["lesson", "quiz"]
-        })
+        return await this.findBy({course}, ["quiz", "lesson"])
     }
 }
