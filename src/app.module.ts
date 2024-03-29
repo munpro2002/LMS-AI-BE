@@ -1,3 +1,5 @@
+import { QuizController } from './controller/quiz.controller';
+import { LessonController } from './controller/lesson.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,12 +18,17 @@ import { APP_GUARD } from '@nestjs/core';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync(TypeOrmConfigAsync),
-    UserModule, CourseModule, PaymentModule],
-  controllers: [AppController],
-  providers: [AppService,
-  {
-    provide: APP_GUARD,
-    useClass: AuthGuard
-  }],
+    UserModule,
+    CourseModule,
+    PaymentModule,
+  ],
+  controllers: [QuizController, LessonController, AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

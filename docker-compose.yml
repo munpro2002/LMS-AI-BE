@@ -2,13 +2,27 @@ version: '3.8'
 
 services:
   api:
-    restart: unless-stopped
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.api_web
     volumes:
       - ./:/app
       - /app/node_modules
     ports:
       - 4000:4000
+
+  ai:
+    build:
+      context: .
+      dockerfile: Dockerfile.api_ai
+    develop:
+      watch:
+        - action: sync
+          path: ./src/prediction
+          target: /app
+        - action: rebuild
+          path: ./src/prediction/model.py
+    ports:
+      - 5000:5000
+    
     

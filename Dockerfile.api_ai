@@ -1,0 +1,18 @@
+# Base image for AI module
+FROM python:3.9.13
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt
+
+COPY ./src/prediction ./
+
+COPY install_dataset.sh /opt/src/install_dataset.sh
+
+RUN /bin/bash -c '/opt/src/install_dataset.sh'
+
+RUN ["python", "model.py"]
+
+CMD ["python", "api.py"]
