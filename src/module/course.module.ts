@@ -10,6 +10,7 @@ import { CourseEditionRepository } from 'src/repository/courseEdition.repository
 import { SectionRepository } from 'src/repository/section.repository';
 import { CourseEnrollmentRepository } from 'src/repository/courseEnrollment.repository';
 import { QuizRepository } from 'src/repository/quiz.repository';
+import { MaterialRepository } from 'src/repository/material.repository';
 import { LessonRepository } from 'src/repository/lesson.repository';
 import { CourseController } from 'src/controller/course.controller';
 import { SectionController } from 'src/controller/section.controller';
@@ -22,6 +23,7 @@ import Lesson from 'src/entity/Lesson.entity';
 import Section from 'src/entity/Section.entity';
 import Quiz from 'src/entity/Quiz.entity';
 import CourseEnrollment from 'src/entity/StudentEnrollCourse.entity';
+import Material from 'src/entity/Material.entity';
 
 @Module({
     imports: [
@@ -34,7 +36,8 @@ import CourseEnrollment from 'src/entity/StudentEnrollCourse.entity';
             CourseEnrollment,
             Lesson,
             Section,
-            Quiz
+            Quiz,
+            Material
         ])
     ],
     controllers: [CourseController, SectionController],
@@ -49,6 +52,7 @@ import CourseEnrollment from 'src/entity/StudentEnrollCourse.entity';
         { provide: 'SectionRepositoryInterface', useClass: SectionRepository},
         { provide: 'LessonRepositoryInterface', useClass: LessonRepository},
         { provide: 'QuizRepositoryInterface', useClass: QuizRepository},
+        { provide: 'MaterialRepositoryInterface', useClass: MaterialRepository},
         { provide: 'CourseEnrollmentRepositoryInterface', useClass: CourseEnrollmentRepository},
     ]
 })

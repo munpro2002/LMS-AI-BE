@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import BaseEntity from './base/base.entity';
 import Course from './Course.entity';
 import Lesson from './Lesson.entity';
-import BaseEntity from './base/base.entity';
 import Quiz from './Quiz.entity';
+import Material from './Material.entity';
 
 @Entity({ name: 'section', schema: 'ailms' })
 export default class Section extends BaseEntity{
@@ -14,8 +15,11 @@ export default class Section extends BaseEntity{
 
   @OneToMany(() => Lesson, (Lesson) => Lesson.section)
   lesson: Lesson[];
+
+  @OneToMany(() => Material, (material) => material.section)
+  material: Material;
   
   @OneToOne(() => Quiz, (quiz) => quiz.section)
   @JoinColumn()
-  quiz: Quiz
+  quiz: Quiz;
 }

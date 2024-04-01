@@ -1,6 +1,7 @@
-import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import Section from './Section.entity';
 import BaseEntity from './base/base.entity';
+import StudentAttemptQuiz from './StudentAttemptQuiz.entity';
 
 @Entity({ name: 'quiz', schema: 'ailms' })
 export default class Quiz extends BaseEntity{
@@ -23,5 +24,8 @@ export default class Quiz extends BaseEntity{
   correct_choice: string;
 
   @OneToOne(() => Section, (section) => section.quiz)
-  section: Section
+  section: Section;
+
+  @OneToMany(() => StudentAttemptQuiz, (student_attempt_quiz) => student_attempt_quiz.quiz)
+  student_attempt_quiz: StudentAttemptQuiz[];
 }

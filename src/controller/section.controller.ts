@@ -8,9 +8,9 @@ export class SectionController {
     constructor(private sectionService: SectionService) {}
 
     @Public()
-    @Post('create_section')
+    @Post('save_section')
     verifyUserLoginController(@Body() sectionInformationDtos: SectionInformationDtos) {
-        return this.sectionService.createSection(sectionInformationDtos);
+        return this.sectionService.saveSection(sectionInformationDtos);
     }
 
     @Public()

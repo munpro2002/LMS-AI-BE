@@ -27,7 +27,7 @@ export class CourseService {
         await this.courseRepository.save(newCourse);
 
         teacherInChargeIds.forEach(async id => {
-            this.courseEditionRepository.teacherAssignedCourse(id, newCourse)
+            this.courseEditionRepository.teacherAssignedCourse(id, newCourse);
         })
 
         return newCourse;
@@ -44,9 +44,9 @@ export class CourseService {
     }
 
     async studentEnrollCourse(request: Request, courseEnrollmentDtos: CourseEnrollmentDtos) {
-        const studentId = request['user'].sub
+        const studentId = request['user'].sub;
 
-        return this.courseEnrollmentRepository.studentEnrollCourse(studentId, courseEnrollmentDtos)
+        return this.courseEnrollmentRepository.studentEnrollCourse(studentId, courseEnrollmentDtos);
     }
 
 }

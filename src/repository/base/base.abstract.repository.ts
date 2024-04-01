@@ -37,7 +37,7 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
         return await this.entity.findOneBy(filter as FindOptionsWhere<T>);
     }
 
-    async update(id: string, update_dto: QueryDeepPartialEntity<T>): Promise<UpdateResult> {
+    async update(id: number, update_dto: QueryDeepPartialEntity<T>): Promise<UpdateResult> {
         return await this.entity.update(id, update_dto);
     }
 

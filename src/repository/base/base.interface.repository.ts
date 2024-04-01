@@ -19,7 +19,7 @@ export interface BaseRepositoryInterface<T> {
         status: boolean
     ): Promise<T[]>;
 
-    update(id: string, dto: QueryDeepPartialEntity<T>): Promise<UpdateResult>;
+    update(id: number, dto: QueryDeepPartialEntity<T>): Promise<UpdateResult>;
 
     save(dto: DeepPartial<T>): Promise<T>;
 }

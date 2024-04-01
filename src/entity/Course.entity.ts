@@ -3,7 +3,6 @@ import CourseEnrollment from './StudentEnrollCourse.entity';
 import CourseEdition from './TeacherEditCourse.entity';
 import Admin from './Admin.entity';
 import Section from './Section.entity';
-import Assignment from './Assignment.entity';
 import BaseEntity from './base/base.entity';
 
 @Entity({ name: 'course', schema: 'ailms' })
@@ -46,7 +45,4 @@ export default class Course extends BaseEntity{
 
   @OneToMany(() => Section, (Section) => Section.course)
   section: Section[];
-
-  @OneToMany(() => Assignment, (Assignment) => Assignment.course)
-  assignment: Assignment[];
 }
