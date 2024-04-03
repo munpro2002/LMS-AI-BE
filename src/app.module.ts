@@ -20,7 +20,7 @@ import { APP_GUARD } from '@nestjs/core';
     UserModule,
     CourseModule
   ],
-  controllers: [QuizController, LessonController, AppController],
+  controllers: [AppController],
   providers: [
     AppService,
     {

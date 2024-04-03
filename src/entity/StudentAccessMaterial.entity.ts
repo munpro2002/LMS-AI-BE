@@ -1,10 +1,13 @@
-import { Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import BaseEntity from './base/base.entity';
 import Material from './Material.entity';
 import Student from './Student.entity';
 
 @Entity({ name: 'student_access_material', schema: 'ailms' })
 export default class StudentAccessMaterial extends BaseEntity{
+  @Column()
+  status: boolean
+
   @ManyToOne(() => Student, (student) => student.student_access_material)
   student: Student;
 

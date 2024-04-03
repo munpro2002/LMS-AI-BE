@@ -1,5 +1,5 @@
 
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Inject } from "@nestjs/common";
 import { CourseRepositoryInterface } from "src/interface/course.interface";
 import { CourseEditionRepositoryInterface } from "src/interface/courseEdition.interface";
