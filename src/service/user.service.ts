@@ -49,9 +49,9 @@ export class UserService {
     }
 
     async createNewUser(userInformationDto: UserInformationDto) {
-      const {roleType, ...userInformation} = userInformationDto;
+      const {role, ...userInformation} = userInformationDto;
 
-      if (!roleType) {
+      if (!role) {
         throw new HttpException(HTTPMESSAGE.MISSING_FIELDS, HttpStatus.BAD_REQUEST)
       }
 
@@ -61,12 +61,12 @@ export class UserService {
 
       let user = null;
 
-      if (roleType === USERROLE.ADMIN) {
-        user = await this.adminRepository.createNewAdmin({...userInformation, password});
+      if (role === USERROLE.ADMIN) {
+        user = await this.adminRepository.createNewAdmin({...userInformationDto, password});
       }
 
-      if (roleType === USERROLE.TEACHER) {
-        user = await this.teacherRepository.createNewTeacher({...userInformation, password});
+      if (role === USERROLE.TEACHER) {
+        user = await this.teacherRepository.createNewTeacher({...userInformationDto, password});
       }
     
       return this.returnUserWithJWT(user);
