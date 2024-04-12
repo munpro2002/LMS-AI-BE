@@ -14,6 +14,12 @@ export class CourseEditionRepository extends BaseRepositoryAbstract<CourseEditio
         super(courseEditionRepository);
     }
 
+    async getTeacherCourses(teacherId: number) {
+        const teacher = this.teacherRepository.findById(teacherId)
+
+        return await this.findBy({teacher}, ['course'])
+    }
+
     async teacherAssignedCourse(teacherId: number, course: Course): Promise<CourseEdition> {
         const teacher = await this.teacherRepository.findById(teacherId);
 

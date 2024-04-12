@@ -18,9 +18,9 @@ export class CourseController {
         return this.courseService.getAllAvailableCourses();
     }
 
-    @Get('get_students_courses')
+    @Get('get_user_courses')
     getUserCoursesController(@Req() request: Request) {
-        return this.courseService.getStudentCourses(request);
+        return this.courseService.getUserCourses(request);
     }
 
     @Post('student_enroll_course')

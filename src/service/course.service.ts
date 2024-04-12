@@ -8,6 +8,7 @@ import { CourseInformationDtos } from "src/dto/CourseInformationDtos";
 import { CourseEnrollmentRepositoryInterface } from "src/interface/courseEnrollment.interface";
 import { ENTITY_STATUS } from "src/constants/EntityStatus.constant";
 import { CourseEnrollmentDtos } from "src/dto/CouseEnrollmentDtos";
+import { USERROLE } from "src/enums/UserRole.enum";
 
 @Injectable()
 export class CourseService {
@@ -37,10 +38,25 @@ export class CourseService {
         return await this.courseRepository.findAll(ENTITY_STATUS.AVAILABLE);
     }
 
-    async getStudentCourses(request: Request) {
-        const studentId = request['user'].sub;
+    async getUserCourses(request: Request) {
+        const userId = request['user'].sub;
+        const userRole = request['user'].role;
 
-        return this.courseEnrollmentRepository.getStudentCourses(studentId);
+        let course = null;
+
+        if (userRole === USERROLE.STUDENT) {
+            course = await this.courseEnrollmentRepository.getStudentCourses(userId);
+        }
+
+        if (userRole === USERROLE.TEACHER) {
+            course = await this.courseEditionRepository.getTeacherCourses(userId);
+        }
+
+        if (userRole === USERROLE.ADMIN) {
+            return await this.getAllAvailableCourses();
+        }
+
+        return course;
     }
 
     async studentEnrollCourse(request: Request, courseEnrollmentDtos: CourseEnrollmentDtos) {

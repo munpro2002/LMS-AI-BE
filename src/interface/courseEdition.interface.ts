@@ -4,5 +4,7 @@ import { BaseRepositoryInterface } from 'src/repository/base/base.interface.repo
 
 export interface CourseEditionRepositoryInterface
     extends BaseRepositoryInterface<CourseEdition> {
+        getTeacherCourses(teacherId: number): Promise<CourseEdition[]>
+        
         teacherAssignedCourse(teacherId: number, course: Course): Promise<CourseEdition> 
     }

@@ -87,7 +87,7 @@ export class UserService {
     }
  
     async returnUserWithJWT(user: User) {
-      const payload = {sub: user.id, userName: user.name};
+      const payload = {sub: user.id, userRole: user.role};
       const {password, ...userReturnInfo} = user
       
       return {
