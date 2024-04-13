@@ -1,6 +1,6 @@
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseRepositoryInterface } from './base.interface.repository';
-import { DeepPartial, FindManyOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { DeepPartial, DeleteResult, FindManyOptions, FindOptionsWhere, Repository, UpdateResult } from "typeorm";
 import BaseEntity from 'src/entity/base/base.entity';
 
 export abstract class BaseRepositoryAbstract<T extends BaseEntity>
@@ -43,5 +43,9 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
 
     async save(dto: DeepPartial<T>): Promise<T> {
         return await this.entity.save(dto);
+    }
+
+    async delete(id: number): Promise<DeleteResult> {
+        return await this.entity.delete(id);
     }
 }

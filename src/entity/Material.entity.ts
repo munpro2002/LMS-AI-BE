@@ -3,7 +3,7 @@ import BaseEntity from './base/base.entity';
 import StudentAccessMaterial from './StudentAccessMaterial.entity';
 import Section from './Section.entity';
 
-@Entity({ name: 'course_material', schema: 'ailms' })
+@Entity({ name: 'material', schema: 'ailms' })
 export default class Material extends BaseEntity{
   @Column()
   activity_type: string;
@@ -11,7 +11,10 @@ export default class Material extends BaseEntity{
   @Column()
   url_path: string;
 
-  @ManyToOne(() => Section, (section) => section.material)
+  @ManyToOne(() => Section, (section) => section.material, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete'
+  })
   section: Section;
 
   @OneToMany(() => StudentAccessMaterial, (StudentAccessMaterial) => StudentAccessMaterial.material)

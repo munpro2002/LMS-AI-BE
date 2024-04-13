@@ -2,19 +2,18 @@ export class SectionInformationDtos {
     sectionId?:number
     name: string;
     courseId: number;
-    lessons: LessonInformationDtos[];
-    quiz: QuizInformationDtos;
-    materials: MaterialInformationDtos[];
 }
 
 export class LessonInformationDtos {
     lessonId?: number
+    sectionId: number
     name: string;
     video_path: string;
 }
 
 export class QuizInformationDtos {
     quizId?: number;
+    sectionId: number;
     question: string;
     first_choice: string;
     second_choice: string;
@@ -25,6 +24,7 @@ export class QuizInformationDtos {
 
 export class MaterialInformationDtos {
     materialId?: number;
+    sectionId: number;
     activity_type: string;
     url_path: string;
 }

@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CourseService } from 'src/service/course.service';
 import { SectionService } from 'src/service/section.service';
+import { MaterialService } from 'src/service/material.service';
+import { LessonService } from 'src/service/lesson.service';
+import { QuizService } from 'src/service/quiz.service';
 import { AdminRepository } from 'src/repository/admin.repository';
 import { TeacherRepository } from 'src/repository/teacher.repository';
 import { StudentRepository } from 'src/repository/student.repository';
@@ -14,6 +17,9 @@ import { MaterialRepository } from 'src/repository/material.repository';
 import { LessonRepository } from 'src/repository/lesson.repository';
 import { CourseController } from 'src/controller/course.controller';
 import { SectionController } from 'src/controller/section.controller';
+import { MaterialController } from 'src/controller/material.controller';
+import { LessonController } from 'src/controller/lesson.controller';
+import { QuizController } from 'src/controller/quiz.controller';
 import Admin from 'src/entity/Admin.entity';
 import Teacher from 'src/entity/Teacher.entity';
 import Student from 'src/entity/Student.entity';
@@ -40,10 +46,19 @@ import Material from 'src/entity/Material.entity';
             Material
         ])
     ],
-    controllers: [CourseController, SectionController],
+    controllers: [
+        CourseController,
+        SectionController,
+        QuizController,
+        LessonController,
+        MaterialController
+    ],
     providers: [
         CourseService,
         SectionService,
+        MaterialService,
+        LessonService,
+        QuizService,
         { provide: 'CourseEditionRepositoryInterface', useClass: CourseEditionRepository},
         { provide: 'CourseRepositoryInterface', useClass: CourseRepository},
         { provide: 'AdminRepositoryInterface', useClass: AdminRepository},

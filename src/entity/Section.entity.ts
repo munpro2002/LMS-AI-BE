@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import BaseEntity from './base/base.entity';
 import Course from './Course.entity';
 import Lesson from './Lesson.entity';
@@ -13,13 +13,18 @@ export default class Section extends BaseEntity{
   @ManyToOne(() => Course, (Course) => Course.section)
   course: Course;
 
-  @OneToMany(() => Lesson, (Lesson) => Lesson.section)
+  @OneToMany(() => Lesson, (Lesson) => Lesson.section, {
+    cascade: true,
+  })
   lesson: Lesson[];
 
-  @OneToMany(() => Material, (material) => material.section)
-  material: Material;
+  @OneToMany(() => Material, (material) => material.section, {
+    cascade: true
+  })
+  material: Material[];
   
-  @OneToOne(() => Quiz, (quiz) => quiz.section)
-  @JoinColumn()
-  quiz: Quiz;
+  @OneToMany(() => Quiz, (quiz) => quiz.section, {
+    cascade: true
+  })
+  quiz: Quiz[];
 }

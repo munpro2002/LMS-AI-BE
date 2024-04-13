@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 import Section from './Section.entity';
 import BaseEntity from './base/base.entity';
 import StudentAttemptQuiz from './StudentAttemptQuiz.entity';
@@ -23,7 +23,10 @@ export default class Quiz extends BaseEntity{
   @Column()
   correct_choice: string;
 
-  @OneToOne(() => Section, (section) => section.quiz)
+  @ManyToOne(() => Section, (section) => section.quiz, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete'
+  })
   section: Section;
 
   @OneToMany(() => StudentAttemptQuiz, (student_attempt_quiz) => student_attempt_quiz.quiz)

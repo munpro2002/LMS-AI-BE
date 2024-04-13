@@ -10,6 +10,9 @@ export default class Lesson extends BaseEntity{
   @Column()
   video_path: string;
 
-  @ManyToOne(() => Section, (Section) => Section.lesson)
+  @ManyToOne(() => Section, (Section) => Section.lesson, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete'
+  })
   section: Section;
 }
