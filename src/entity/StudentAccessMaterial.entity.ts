@@ -6,7 +6,7 @@ import Student from './Student.entity';
 @Entity({ name: 'student_access_material', schema: 'ailms' })
 export default class StudentAccessMaterial extends BaseEntity{
   @Column()
-  status: boolean
+  sum_click: number;
 
   @ManyToOne(() => Student, (student) => student.student_access_material)
   student: Student;

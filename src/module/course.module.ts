@@ -15,6 +15,8 @@ import { CourseEnrollmentRepository } from 'src/repository/courseEnrollment.repo
 import { QuizRepository } from 'src/repository/quiz.repository';
 import { MaterialRepository } from 'src/repository/material.repository';
 import { LessonRepository } from 'src/repository/lesson.repository';
+import { StudentAttemptQuizRepository } from 'src/repository/studentAttempQuiz.repository';
+import { StudentAccessMaterialRepository } from 'src/repository/studentAccessMaterial.repository';
 import { CourseController } from 'src/controller/course.controller';
 import { SectionController } from 'src/controller/section.controller';
 import { MaterialController } from 'src/controller/material.controller';
@@ -30,6 +32,8 @@ import Section from 'src/entity/Section.entity';
 import Quiz from 'src/entity/Quiz.entity';
 import CourseEnrollment from 'src/entity/StudentEnrollCourse.entity';
 import Material from 'src/entity/Material.entity';
+import StudentAttemptQuiz from 'src/entity/StudentAttemptQuiz.entity';
+import StudentAccessMaterial from 'src/entity/StudentAccessMaterial.entity';
 
 @Module({
     imports: [
@@ -43,8 +47,10 @@ import Material from 'src/entity/Material.entity';
             Lesson,
             Section,
             Quiz,
-            Material
-        ])
+            Material,
+            StudentAttemptQuiz,
+            StudentAccessMaterial
+        ]),
     ],
     controllers: [
         CourseController,
@@ -69,6 +75,8 @@ import Material from 'src/entity/Material.entity';
         { provide: 'QuizRepositoryInterface', useClass: QuizRepository},
         { provide: 'MaterialRepositoryInterface', useClass: MaterialRepository},
         { provide: 'CourseEnrollmentRepositoryInterface', useClass: CourseEnrollmentRepository},
+        { provide: 'StudentAttemptQuizRepositoryInterface', useClass: StudentAttemptQuizRepository},
+        { provide: 'StudentAccessMaterialRepositoryInterface', useClass: StudentAccessMaterialRepository},
     ]
 })
 export class CourseModule {}

@@ -13,17 +13,15 @@ export class LessonService {
 
     async saveLesson(lessonInformationDtos: LessonInformationDtos) {
         const {lessonId, sectionId, ...lessonInfo} = lessonInformationDtos;
-
-        let lesson = null;
         
         if (lessonId) {
-            lesson = await this.lessonRepository.update(sectionId, {...lessonInfo});
+            await this.lessonRepository.update(sectionId, {...lessonInfo});
         } else {
             const relatedSection = await this.sectionRepository.findById(sectionId);
-            lesson = await this.lessonRepository.save({...lessonInfo, section: relatedSection});
+            await this.lessonRepository.save({...lessonInfo, section: relatedSection});
         }
 
-        return lesson;
+        return true;
     }
 
     async deleteLesson(lessonId: number) {

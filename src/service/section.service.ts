@@ -14,16 +14,15 @@ export class SectionService {
 
     async saveSection(sectionInformationDtos: SectionInformationDtos) {
         const {sectionId, courseId, ...sectionInfo} = sectionInformationDtos;
-        let section = null;
 
         if (sectionId) {
-            section = await this.sectionRepository.update(sectionId, {...sectionInfo});
+            await this.sectionRepository.update(sectionId, {...sectionInfo});
         } else {
             const relatedCourse = await this.courseRepository.findById(courseId);
-            section = await this.sectionRepository.save({...sectionInfo, course: relatedCourse});
+            await this.sectionRepository.save({...sectionInfo, course: relatedCourse});
         }
 
-        return section;
+        return true;
     }
 
     async getCourseSections(courseId: number) {

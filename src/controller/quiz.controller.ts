@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
-import { Public } from 'src/decorator/public.decorator';
+import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
 import { QuizInformationDtos } from 'src/dto/SectionInformationDtos';
 import { QuizService } from 'src/service/quiz.service';
 
@@ -7,15 +6,20 @@ import { QuizService } from 'src/service/quiz.service';
 export class QuizController {
     constructor(private quizService: QuizService) {}
 
-    @Public()
     @Post('save_quiz')
     saveQuizController(@Body() quizInformationDtos: QuizInformationDtos) {
         return this.quizService.saveQuiz(quizInformationDtos);
     }
 
-    @Public()
     @Delete('delete_quiz/:id') 
     deleteQuizController(@Param('id') id: number) {
         return this.quizService.deleteQuiz(id);
+    }
+
+    @Post('update_quiz_score/:id')
+    updateQuizScoreController(@Param('id') quizId: number, @Req() request: Request, @Body() score: number) {
+        const studentId = request['sub'].id;
+
+        return this.quizService.updateQuizScore(quizId, studentId, score);
     }
 }
