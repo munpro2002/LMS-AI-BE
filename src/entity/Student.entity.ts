@@ -12,12 +12,6 @@ export default class Student extends User{
   @Column()
   highest_education: string;
 
-  @Column()
-  age_band: string;
-
-  @Column()
-  disability: boolean;
-
   @OneToMany(() => CourseEnrollment, (CourseEnrollment) => CourseEnrollment.student)
   courseEnrollment: CourseEnrollment[];
 

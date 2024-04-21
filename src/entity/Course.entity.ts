@@ -28,8 +28,8 @@ export default class Course extends BaseEntity{
   @Column()
   trailerPath: string;
 
-  @Column({ nullable: true})
-  rating: number;
+  @Column({type: 'date'})
+  date_start: string;
 
   @Column({ default: true })
   status: boolean;

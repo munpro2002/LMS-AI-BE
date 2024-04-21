@@ -18,8 +18,6 @@ def passing_rate_prediction():
 
         importance_output = {}
 
-        print('h123412344')
-
         for idx, field in enumerate(prediction_field):
             importance_output[field] = round(importance_matrix[idx] * 100)
 

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpModule } from '@nestjs/axios';
 import { CourseService } from 'src/service/course.service';
 import { SectionService } from 'src/service/section.service';
 import { MaterialService } from 'src/service/material.service';
@@ -51,6 +52,7 @@ import StudentAccessMaterial from 'src/entity/StudentAccessMaterial.entity';
             StudentAttemptQuiz,
             StudentAccessMaterial
         ]),
+        HttpModule
     ],
     controllers: [
         CourseController,

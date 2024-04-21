@@ -1,4 +1,4 @@
-import { Body, Post, Get, Controller, Req } from '@nestjs/common';
+import { Body, Post, Get, Controller, Req, Param } from '@nestjs/common';
 import { CourseService } from 'src/service/course.service';
 import { CourseInformationDtos } from 'src/dto/CourseInformationDtos';
 import { Public } from 'src/decorator/public.decorator';
@@ -26,5 +26,10 @@ export class CourseController {
     @Post('student_enroll_course')
     studentEnrollCourseController(@Req() request: Request, @Body() courseEnrollmentDtos: CourseEnrollmentDtos) {
         return this.courseService.studentEnrollCourse(request, courseEnrollmentDtos);
+    }
+
+    @Get('course_pass_prediction/:id')
+    getCoursePassingRatePredictionController(@Param('id') courseId: number, @Req() request: Request){
+        return this.courseService.coursePassingRatePrediction(request, courseId);
     }
 }
