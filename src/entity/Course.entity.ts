@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 import CourseEnrollment from './StudentEnrollCourse.entity';
 import CourseEdition from './TeacherEditCourse.entity';
 import Admin from './Admin.entity';

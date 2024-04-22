@@ -15,9 +15,7 @@ export class CourseEditionRepository extends BaseRepositoryAbstract<CourseEditio
     }
 
     async getTeacherCourses(teacherId: number) {
-        const teacher = this.teacherRepository.findById(teacherId)
-
-        return await this.findBy({teacher}, ['course'])
+        return await this.findBy({teacher: {id: teacherId}}, ['course']);
     }
 
     async teacherAssignedCourse(teacherId: number, course: Course): Promise<CourseEdition> {

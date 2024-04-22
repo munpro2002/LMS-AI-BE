@@ -53,7 +53,7 @@ export class CourseService {
 
     async getUserCourses(request: Request) {
         const userId = request['user'].sub;
-        const userRole = request['user'].role;
+        const userRole = request['user'].userRole;
 
         let course = null;
 
