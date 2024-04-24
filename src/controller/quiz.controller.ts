@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
 import { QuizInformationDtos } from 'src/dto/SectionInformationDtos';
+import { UpdateQuizAttempt } from 'src/dto/UpdateQuizAttemptDtos';
 import { QuizService } from 'src/service/quiz.service';
 
 @Controller('api/v1/quiz')
@@ -17,8 +18,9 @@ export class QuizController {
     }
 
     @Post('update_quiz_score/:id')
-    updateQuizScoreController(@Param('id') quizId: number, @Req() request: Request, @Body() score: number) {
-        const studentId = request['sub'].id;
+    updateQuizScoreController(@Param('id') quizId: number, @Req() request: Request, @Body() updateQuizAttempt: UpdateQuizAttempt) {
+        const studentId = request['user'].sub;
+        const { score } = updateQuizAttempt;
 
         return this.quizService.updateQuizScore(quizId, studentId, score);
     }

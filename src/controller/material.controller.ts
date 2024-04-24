@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Param, Post, Req } from '@nestjs/common';
 import { MaterialInformationDtos } from 'src/dto/SectionInformationDtos';
+import { UpdateMaterialAccess } from 'src/dto/UpdateMaterialAccessDtos';
 import { MaterialService } from 'src/service/material.service';
 
 @Controller('api/v1/material')
@@ -17,9 +18,10 @@ export class MaterialController {
     }
 
     @Post('update_material_sum_click/:id')
-    updateMaterialController(@Param('id') materialId: number, @Req() request: Request, @Body() numClickInAmountOFTime: number) {
-        const studentId = request['sub'].id;
+    updateMaterialController(@Param('id') materialId: number, @Req() request: Request, @Body() updateMaterialAccess: UpdateMaterialAccess) {
+        const studentId = request['user'].sub;
+        const { numClickInAmountOfTime } = updateMaterialAccess;
 
-        return this.materialService.updateMaterialSumClick(materialId, studentId, numClickInAmountOFTime);
+        return this.materialService.updateMaterialSumClick(materialId, studentId, numClickInAmountOfTime);
     }
 }
