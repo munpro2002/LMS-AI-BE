@@ -1,5 +1,6 @@
 export class PredictionInformationDtos {
-    material_list: number[];
+    id_student: number;
+    docList: number[];
     date_registration: number;
     region: string;
     highest_education: string;

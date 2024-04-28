@@ -11,7 +11,6 @@ import { ENTITY_STATUS } from "src/constants/EntityStatus.constant";
 import { CourseEnrollmentDtos } from "src/dto/CouseEnrollmentDtos";
 import { USERROLE } from "src/enums/UserRole.enum";
 import { HttpService } from "@nestjs/axios";
-import { SectionService } from "./section.service";
 import { StudentAttemptQuizRepositoryInterface } from "src/interface/studentAttemptQuiz.interface";
 import { StudentAccessMaterialRepositoryInterface } from "src/interface/studentAccessMaterial.interface";
 import { PredictionInformationDtos } from "src/dto/predictionInformationDtos";
@@ -27,7 +26,6 @@ export class CourseService {
         @Inject('CourseEnrollmentRepositoryInterface') private courseEnrollmentRepository: CourseEnrollmentRepositoryInterface,
         @Inject('StudentAttemptQuizRepositoryInterface') private studentAttemptQuizRepository: StudentAttemptQuizRepositoryInterface,
         @Inject('StudentAccessMaterialRepositoryInterface') private studentAccessMaterialRepository: StudentAccessMaterialRepositoryInterface,      
-        private readonly sectionService: SectionService,
         private readonly httpService: HttpService
 
     ) {}
@@ -81,32 +79,25 @@ export class CourseService {
     async coursePassingRatePrediction(request: Request, courseId: number) {
         const studentId = request['user'].sub;
         const student = await this.studentRepository.findById(studentId);
-        const course = await this.courseRepository.findById(courseId);
-        const courseEnrollmentRecord = await this.courseEnrollmentRepository.findOneBy({student, course})
+        const courseEnrollmentRecord = await this.courseEnrollmentRepository.findOneBy({student: {id: studentId}, course: {id: courseId}})
 
-        const courseSections = await this.sectionService.getCourseSections(courseId);
+        const studentAttemptQuizRecords = await this.studentAttemptQuizRepository.getStudentAttemptQuiz(studentId, courseId);
+        const studentAccessMaterialRecords = await this.studentAccessMaterialRepository.getStudentAccessMaterial(studentId, courseId);
 
         let inProgressScore = 0;
         let materialList = []; 
 
-        for (let section of courseSections) {
-            const {quiz, material} = section;
+        for (let record of studentAttemptQuizRecords) {
+            inProgressScore += record.score;
+        }
 
-            for (let singleQuiz of quiz) {
-                const studentAttemptQuizRecord = await this.studentAttemptQuizRepository.findOneBy({student, singleQuiz});
-                
-                inProgressScore += studentAttemptQuizRecord?.score;
-            }
-
-            for (let singleMaterial of material) {
-                const studentAccessMaterialRecord = await this.studentAccessMaterialRepository.findOneBy({student, singleMaterial});
-                
-                materialList.push(studentAccessMaterialRecord?.id);
-            }
+        for (let record of studentAccessMaterialRecords) {
+            materialList.push(record.id);
         }
 
         const predictionPayload: PredictionInformationDtos = {
-            material_list: materialList,
+            id_student: studentId,
+            docList: materialList,
             highest_education: student?.highest_education,
             region: student?.region,
             inprogress_score: inProgressScore,

@@ -10,4 +10,13 @@ export class StudentAttemptQuizRepository extends BaseRepositoryAbstract<Student
     ) {
         super(studentAttemptQuizRepository);
     }
+
+    getStudentAttemptQuiz(studentId: number, courseId: number) {
+        return this.studentAttemptQuizRepository.createQueryBuilder('StudentAttemptQuiz')
+            .innerJoin('StudentAttemptQuiz.quiz', 'Quiz')
+            .innerJoin('Quiz.section', 'Section')
+            .where('StudentAttemptQuiz.studentId', {studentId})
+            .where('Section.courseId', {courseId})
+            .getMany();
+    }
 }
