@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Req } from '@nestjs/common';
 import { UserLoginCredentialsDto } from 'src/dto/UserLoginCredentialsDto';
 import { UserInformationDto } from 'src/dto/UserInfomationDtos';
 import { UserService } from 'src/service/user.service';
@@ -30,5 +30,10 @@ export class UserController {
     @Get('get_available_teachers')
     getAllAvailableTeachersController() {
         return this.userService.getAllAvailableTeachers();
+    }
+
+    @Post('update_user_profile')
+    updateUserProfileController(@Req() request, @Body() userInformationDto: UserInformationDto) {
+        return this.userService.updateUserProfile(request, userInformationDto);
     }
 }

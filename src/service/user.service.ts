@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { TeacherRepositoryInterface } from "src/interface/teacher.interface";
 import { StudentRepositoryInterface } from "src/interface/student.interface";
 import { AdminRepositoryInterface } from "src/interface/admin.interface";
@@ -99,5 +99,12 @@ export class UserService {
     async getAllAvailableTeachers() {
       return this.teacherRepository.getAllAvailableTeachers();
     }
+
+    async updateUserProfile(request: Request, userInformationDto: UserInformationDto) {
+      const userId = request['user'].sub;
+
+      await this.userRepository.update(userId, userInformationDto)
+
+      return true;
+    }
 }
-  

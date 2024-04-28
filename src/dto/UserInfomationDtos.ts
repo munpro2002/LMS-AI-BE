@@ -6,8 +6,6 @@ export class UserInformationDto extends UserLoginCredentialsDto {
     name: string;
     region?: string;
     highest_education?: string;
-    age_band?: string;
-    disability: boolean;
     specialist?: COURSECATEGORY;
-    role: USERROLE;
+    role?: USERROLE;
 }
