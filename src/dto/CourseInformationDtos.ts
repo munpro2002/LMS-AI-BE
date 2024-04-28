@@ -10,5 +10,6 @@ export class CourseInformationDtos {
     level: COURSELEVEL
     thumbnailPath: string;
     trailerPath: string;
-    teacherInChargeIds: number[]
+    teacherInChargeIds: number[];
+    date_start: string;
 }
