@@ -100,7 +100,7 @@ export class CourseService {
             docList: materialList,
             highest_education: student?.highest_education,
             region: student?.region,
-            inprogress_score: inProgressScore,
+            inprogress_score: inProgressScore / studentAttemptQuizRecords.length * 10,
             date_registration: courseEnrollmentRecord.date_registration,
         }
 
@@ -110,6 +110,8 @@ export class CourseService {
     }
 
     async coursePredictionProcessing(predictionPayload: PredictionInformationDtos){
+
+
         return await lastValueFrom(
             this.httpService.post(`${process.env.AI_SERVER_BASE_URL}/passing_rate_prediction`, predictionPayload).pipe(
                 map(res => res.data)
