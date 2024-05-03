@@ -11,6 +11,9 @@ export default class Material extends BaseEntity{
   @Column()
   url_path: string;
 
+  @Column()
+  title: string;
+
   @ManyToOne(() => Section, (section) => section.material, {
     onDelete: 'CASCADE',
     orphanedRowAction: 'delete'

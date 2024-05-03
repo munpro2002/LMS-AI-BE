@@ -27,4 +27,5 @@ export class MaterialInformationDtos {
     sectionId: number;
     activity_type: string;
     url_path: string;
+    title: string;
 }

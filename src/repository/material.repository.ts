@@ -6,8 +6,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 export class MaterialRepository extends BaseRepositoryAbstract<Material> {
     constructor(
         @InjectRepository(Material)
-        private readonly MaterialRepository: Repository<Material>    
+        private readonly materialRepository: Repository<Material>    
     ) {
-        super(MaterialRepository);
+        super(materialRepository);
+    }
+
+    async getMaterialsByIds(ids: number[]) {
+        return this.materialRepository.createQueryBuilder('Material')
+                .where('Material.Id IN (:ids)', {ids})
+                .getMany()
     }
 }

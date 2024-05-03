@@ -7,6 +7,7 @@ import { AdminRepositoryInterface } from "src/interface/admin.interface";
 import { StudentRepositoryInterface } from "src/interface/student.interface";
 import { CourseInformationDtos } from "src/dto/CourseInformationDtos";
 import { CourseEnrollmentRepositoryInterface } from "src/interface/courseEnrollment.interface";
+import { MaterialRepositoryInterface } from "src/interface/material.interface";
 import { ENTITY_STATUS } from "src/constants/EntityStatus.constant";
 import { CourseEnrollmentDtos } from "src/dto/CouseEnrollmentDtos";
 import { USERROLE } from "src/enums/UserRole.enum";
@@ -26,6 +27,7 @@ export class CourseService {
         @Inject('CourseEnrollmentRepositoryInterface') private courseEnrollmentRepository: CourseEnrollmentRepositoryInterface,
         @Inject('StudentAttemptQuizRepositoryInterface') private studentAttemptQuizRepository: StudentAttemptQuizRepositoryInterface,
         @Inject('StudentAccessMaterialRepositoryInterface') private studentAccessMaterialRepository: StudentAccessMaterialRepositoryInterface,      
+        @Inject('MaterialRepositoryInterface') private materialRepository: MaterialRepositoryInterface,      
         private readonly httpService: HttpService
 
     ) {}
@@ -106,12 +108,13 @@ export class CourseService {
 
         const result = await this.coursePredictionProcessing(predictionPayload);
 
+        const {id_site_max_values} = result;
+        result.id_site_max_values = await this.materialRepository.getMaterialsByIds(id_site_max_values);
+
         return result;
     }
 
-    async coursePredictionProcessing(predictionPayload: PredictionInformationDtos){
-
-
+    async coursePredictionProcessing(predictionPayload: PredictionInformationDtos) {
         return await lastValueFrom(
             this.httpService.post(`${process.env.AI_SERVER_BASE_URL}/passing_rate_prediction`, predictionPayload).pipe(
                 map(res => res.data)
