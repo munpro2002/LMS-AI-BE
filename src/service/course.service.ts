@@ -16,6 +16,7 @@ import { StudentAttemptQuizRepositoryInterface } from "src/interface/studentAtte
 import { StudentAccessMaterialRepositoryInterface } from "src/interface/studentAccessMaterial.interface";
 import { PredictionInformationDtos } from "src/dto/predictionInformationDtos";
 import { lastValueFrom, map } from "rxjs";
+import { QuizRepositoryInterface } from "src/interface/quiz.interface";
 
 @Injectable()
 export class CourseService {
@@ -28,6 +29,7 @@ export class CourseService {
         @Inject('StudentAttemptQuizRepositoryInterface') private studentAttemptQuizRepository: StudentAttemptQuizRepositoryInterface,
         @Inject('StudentAccessMaterialRepositoryInterface') private studentAccessMaterialRepository: StudentAccessMaterialRepositoryInterface,      
         @Inject('MaterialRepositoryInterface') private materialRepository: MaterialRepositoryInterface,      
+        @Inject('QuizRepositoryInterface') private quizRepository: QuizRepositoryInterface,      
         private readonly httpService: HttpService
 
     ) {}
@@ -85,6 +87,7 @@ export class CourseService {
 
         const studentAttemptQuizRecords = await this.studentAttemptQuizRepository.getStudentAttemptQuiz(studentId, courseId);
         const studentAccessMaterialRecords = await this.studentAccessMaterialRepository.getStudentAccessMaterial(studentId, courseId);
+        const totalCourseQuizzes = await this.quizRepository.findBy({course: {id: courseId}});
 
         let inProgressScore = 0;
         let materialList = []; 
@@ -102,7 +105,7 @@ export class CourseService {
             docList: materialList,
             highest_education: student?.highest_education,
             region: student?.region,
-            inprogress_score: inProgressScore / studentAttemptQuizRecords.length * 10,
+            inprogress_score: inProgressScore / totalCourseQuizzes.length * 10,
             date_registration: courseEnrollmentRecord.date_registration,
         }
 

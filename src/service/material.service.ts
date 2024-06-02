@@ -20,7 +20,7 @@ export class MaterialService {
         const {materialId, sectionId, ...materialInfo} = materialInformationDtos;
         
         if (materialId) {
-            await this.materialRepository.update(sectionId, {...materialInfo});
+            await this.materialRepository.update(materialId, {...materialInfo});
         } else {
             const relatedSection = await this.sectionRepository.findById(sectionId);
             await this.materialRepository.save({...materialInfo, section: relatedSection});

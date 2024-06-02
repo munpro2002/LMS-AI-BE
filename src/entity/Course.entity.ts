@@ -4,6 +4,7 @@ import CourseEdition from './TeacherEditCourse.entity';
 import Admin from './Admin.entity';
 import Section from './Section.entity';
 import BaseEntity from './base/base.entity';
+import Quiz from './Quiz.entity';
 
 @Entity({ name: 'course', schema: 'ailms' })
 export default class Course extends BaseEntity{
@@ -39,6 +40,9 @@ export default class Course extends BaseEntity{
 
   @OneToMany(() => CourseEdition, (CourseEdition) => CourseEdition.course)
   courseEdition: CourseEdition[];
+
+  @OneToMany(() => Quiz, (quiz) => quiz.course)
+  quiz: Quiz[];
 
   @ManyToOne(() => Admin, (Admin) => Admin.course)
   createdBy: Admin;

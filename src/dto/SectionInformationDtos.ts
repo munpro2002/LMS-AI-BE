@@ -20,6 +20,7 @@ export class QuizInformationDtos {
     third_choice: string;
     fourth_choice: string;
     correct_choice: string;
+    courseId: number;
 }
 
 export class MaterialInformationDtos {

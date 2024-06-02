@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 import Section from './Section.entity';
+import Course from './Course.entity';
 import BaseEntity from './base/base.entity';
 import StudentAttemptQuiz from './StudentAttemptQuiz.entity';
 
@@ -28,6 +29,9 @@ export default class Quiz extends BaseEntity{
     orphanedRowAction: 'delete'
   })
   section: Section;
+
+  @ManyToOne(() => Course, (course) => course.quiz)
+  course: Course;
 
   @OneToMany(() => StudentAttemptQuiz, (student_attempt_quiz) => student_attempt_quiz.quiz)
   student_attempt_quiz: StudentAttemptQuiz[];

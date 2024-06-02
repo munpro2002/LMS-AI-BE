@@ -15,7 +15,7 @@ export class LessonService {
         const {lessonId, sectionId, ...lessonInfo} = lessonInformationDtos;
         
         if (lessonId) {
-            await this.lessonRepository.update(sectionId, {...lessonInfo});
+            await this.lessonRepository.update(lessonId, {...lessonInfo});
         } else {
             const relatedSection = await this.sectionRepository.findById(sectionId);
             await this.lessonRepository.save({...lessonInfo, section: relatedSection});

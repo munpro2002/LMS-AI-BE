@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Inject } from "@nestjs/common";
 import { QuizInformationDtos } from "src/dto/SectionInformationDtos";
+import { CourseRepository } from "src/repository/course.repository";
 import { QuizRepository } from "src/repository/quiz.repository";
 import { SectionRepository } from "src/repository/section.repository";
 import { StudentRepository } from "src/repository/student.repository";
@@ -10,28 +11,30 @@ import { StudentAttemptQuizRepository } from "src/repository/studentAttempQuiz.r
 export class QuizService {
     constructor(
         @Inject('SectionRepositoryInterface') private sectionRepository: SectionRepository,
+        @Inject('CourseRepositoryInterface') private courseRepository: CourseRepository,
         @Inject('StudentRepositoryInterface') private studentRepository: StudentRepository,
         @Inject('QuizRepositoryInterface') private quizRepository: QuizRepository,
         @Inject('StudentAttemptQuizRepositoryInterface') private studentAttemptQuizRepository: StudentAttemptQuizRepository,
     ) {}
 
     async saveQuiz(quizInformationDtos: QuizInformationDtos) {
-        const {quizId, sectionId, ...quizInfo} = quizInformationDtos;
+        const {quizId, sectionId, courseId, ...quizInfo} = quizInformationDtos;
 
-        let lesson = null;
+        let quiz = null;
         
         if (quizId) {
-            lesson = await this.quizRepository.update(sectionId, {...quizInfo});
+            quiz = await this.quizRepository.update(quizId, {...quizInfo});
         } else {
             const relatedSection = await this.sectionRepository.findById(sectionId);
-            lesson = await this.quizRepository.save({...quizInfo, section: relatedSection});
+            const relatedCourse = await this.courseRepository.findById(courseId);
+            quiz = await this.quizRepository.save({...quizInfo, section: relatedSection, course: relatedCourse});
         }
 
-        return lesson;
+        return quiz;
     }
 
-    async deleteQuiz(lessonId: number) {
-        return await this.quizRepository.delete(lessonId);
+    async deleteQuiz(quizId: number) {
+        return await this.quizRepository.delete(quizId);
     }
 
     async updateQuizScore(quizId: number, studentId: number, score: number) {

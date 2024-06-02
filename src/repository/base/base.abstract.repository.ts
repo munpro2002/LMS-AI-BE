@@ -20,7 +20,7 @@ export abstract class BaseRepositoryAbstract<T extends BaseEntity>
     }
 
     async findBy(
-        condition: object, entities: Array<string>
+        condition: object, entities: Array<string> = []
     ): Promise<T[]>{
         return await this.entity.find({where: condition, relations: entities} as FindManyOptions<T>);
     }
